@@ -9,9 +9,9 @@ using System.Collections.Generic;
 /// Draws a visual representation of the state of the interpreter, alongside
 /// the state of the grid.
 /// </summary>
-namespace  MarkovJunior
+namespace MarkovJunior
 {
-    
+
     static class GUI
     {
         static readonly int S, SMALL, MAXWIDTH, ZSHIFT, HINDENT, HGAP, HARROW, HLINE, VSKIP, SMALLVSKIP, FONTSHIFT, AFTERFONT;
@@ -23,10 +23,10 @@ namespace  MarkovJunior
 
         /// <summary>The order of characters in a raster font.</summary>
         static readonly char[] legend = "ABCDEFGHIJKLMNOPQRSTUVWXYZ 12345abcdefghijklmnopqrstuvwxyz\u03bb67890{}[]()<>$*-+=/#_%^@\\&|~?'\"`!,.;:".ToCharArray();
-        
-        /// <summary>Index lookup map for <see cref="GUI.legend">legend</see>.</summary>
+
+        /// <summary>Index lookup map for <see cref="legend">legend</see>.</summary>
         static readonly Dictionary<char, byte> map;
-        
+
         static GUI()
         {
             map = new Dictionary<char, byte>();
@@ -37,7 +37,7 @@ namespace  MarkovJunior
             int b0 = bitmap[0];
             int b1 = bitmap[width - 1];
             fonts[0] = (bitmap.Select(argb => argb != b0 && argb != b1).ToArray(), width / 32, height / 3);
-            
+
             (bitmap, width, height, _) = Graphics.LoadBitmap($"resources/fonts/{TITLEFONT}.png");
             b0 = bitmap[0];
             b1 = bitmap[width - 1];
@@ -135,7 +135,7 @@ namespace  MarkovJunior
                 for (int dz = 0; dz < MZ; dz++) for (int dy = 0; dy < MY; dy++) for (int dx = 0; dx < MX; dx++)
                         {
                             byte i = a[dx + dy * MX + dz * MX * MY];
-                            int color = i != 0xff ? palette[characters[i]] : (D3 ? INACTIVE : BACKGROUND);
+                            int color = i != 0xff ? palette[characters[i]] : D3 ? INACTIVE : BACKGROUND;
                             drawShadedSquare(x + dx * S + (MZ - dz - 1) * ZSHIFT, y + dy * S + (MZ - dz - 1) * ZSHIFT, S, color);
                         }
                 return MX * S + (MZ - 1) * ZSHIFT;
@@ -151,7 +151,7 @@ namespace  MarkovJunior
 
             int y = fonts[1].FY / 2;
             write(name, 8, y, ACTIVE, 1);
-            y += (int)(AFTERFONT * fonts[1].FY / 2);
+            y += AFTERFONT * fonts[1].FY / 2;
 
             void draw(Node node, int level)
             {
@@ -206,7 +206,7 @@ namespace  MarkovJunior
                             if (!rule.original) continue;
                             int s = rule.IMX * rule.IMY > MAXWIDTH ? SMALL : S;
 
-                            int LINECOLOR = (active && IsActive(rulenode, r)) ? ACTIVE : INACTIVE;
+                            int LINECOLOR = active && IsActive(rulenode, r) ? ACTIVE : INACTIVE;
                             x += drawArray(rule.binput, x, y, rule.IMX, rule.IMY, rule.IMZ, characters, s) + HGAP;
 
                             drawHLine(x, y + S / 2, HARROW, LINECOLOR, rulenode is not OneNode);
@@ -250,7 +250,7 @@ namespace  MarkovJunior
                                     byte[] substrate = Helper.NonZeroPositions(field.substrate);
                                     for (int k = 0; k < substrate.Length; k++, x += S) drawSquare(x, y, S, characters[substrate[k]]);
                                 }
-                                
+
                                 x = level * HINDENT;
                                 y += fonts[0].FY;
                             }
@@ -335,7 +335,7 @@ namespace  MarkovJunior
                 }
             }
         }
-        
+
         /// <summary>
         /// Determines if the rule at the given index in the given RuleNode was
         /// active on the last execution step.

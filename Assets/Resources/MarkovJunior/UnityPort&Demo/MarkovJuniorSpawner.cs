@@ -6,6 +6,7 @@ using System.Linq;
 using System.Xml.Linq;
 using System.Diagnostics;
 using System.Collections.Generic;
+using MarkovJunior;
 
 // Copyright (C) 2022 Maxim Gumin, The MIT License (MIT)
 public class MarkovJuniorSpawner : MonoBehaviour
