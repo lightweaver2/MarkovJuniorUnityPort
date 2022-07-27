@@ -1,6 +1,6 @@
 # MarkovJuniorUnityPort
  
-A port of https://github.com/mxgmn/MarkovJunior to Unity, I've only tested it in 2021 LFS, but it should work for all version.
+Porting https://github.com/mxgmn/MarkovJunior to Unity, I've only tested it in 2021 LTS, but it should work for all version.
 
 The documentation is done by https://github.com/kaya3/MarkovJunior-docs
 
